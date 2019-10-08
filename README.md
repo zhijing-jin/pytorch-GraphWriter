@@ -8,6 +8,7 @@ This is a Pytorch re-implementation of the paper, [Text Generation from Knowledg
 Training:
 ```
 CUDA_VISIBLE_DEVICES=5 python train.py -save tmp_useless
+CUDA_VISIBLE_DEVICES=5 python try_train.py -save tmp_useless
 CUDA_VISIBLE_DEVICES=6 python train.py -title -save tmp_no_title
 ```
 Use ``--help`` for a list of all training options.
