@@ -13,12 +13,15 @@ Use ``--help`` for a list of all training options.
 
 To generate, use 
 ```
+python try_generate.py -ckpt ~/proj/GraphWriter/tmp/19.vloss-3.609007.lr-0.1 -save ~/proj/GraphWriter/tmp
+
 python3.6 generator.py -save <SAVED MODEL>
 ``` 
 with the appropriate model flags used to train the model
 
 To evaluate, run
 ```
+python eval.py ~/proj/GraphWriter/outputs/tmp.pred ~/proj/GraphWriter/outputs/tmp.gold
 python3.6 eval.py <GENERATED TEXTS> <GOLD TARGETS>
 ```
 

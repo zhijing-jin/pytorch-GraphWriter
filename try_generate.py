@@ -2,12 +2,14 @@ import sys
 from random import shuffle
 import os
 from math import exp
+from tqdm import tqdm
 import torch
 from torch import nn
 from torch.nn import functional as F
 from lastDataset import dataset
 from pargs import pargs, dynArgs
 from models.newmodel import model
+from efficiency.log import fwrite
 
 def train(m, o, ds, args):
     print("Training", end="\t")
@@ -55,12 +57,10 @@ def test(args,ds,m,epoch='cmdline'):
   m.eval()
   k = 0
   data = ds.mktestset(args)
-  ofn = os.path.join(path, "outputs/"+model+".inputs.beam_predictions."+epoch)
-  pf = open(ofn,'w')
   preds = []
   golds = []
   writeout = []
-  for b in data:
+  for b in tqdm(data):
     #if k == 10: break
     writeout.append('{} out of {}'.format(k,len(data)))
     b = ds.fixBatch(b)
@@ -78,11 +78,16 @@ def test(args,ds,m,epoch='cmdline'):
 
     preds.append(gen.lower())
     golds.append(gold.lower())
-    #tf.write(ent+'\n')
-    pf.write(gen.lower()+'\n')
   m.train()
 
+  path_pred = os.path.join(path, "outputs/"+model+".pred")
+  path_gold = os.path.join(path, "outputs/"+model+".gold")
+
+  fwrite('\n'.join(preds), path_pred)
+  fwrite('\n'.join(golds), path_gold)
+
   import pdb;pdb.set_trace()
+
   print(writeout)
   return preds,golds
 
