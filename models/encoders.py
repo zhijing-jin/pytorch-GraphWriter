@@ -1,10 +1,6 @@
 import torch
 from torch import nn
-from torch.nn import functional as F
 from torch.nn.utils.rnn import pack_padded_sequence,pad_packed_sequence
-from allennlp.modules.elmo import Elmo
-from models.graphAttn import GAT
-from allennlp.modules.seq2seq_encoders.stacked_self_attention import StackedSelfAttentionEncoder
 
 class encode_inputs(nn.Module):
   def __init__(self,args):

@@ -2,8 +2,6 @@ import torch
 import math
 from torch import nn
 from torch.nn import functional as F
-from models.graphAttn import GAT
-from allennlp.modules.seq2seq_encoders.stacked_self_attention import StackedSelfAttentionEncoder
 from models.attention import MultiHeadAttention
 
 

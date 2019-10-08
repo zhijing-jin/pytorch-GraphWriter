@@ -1,9 +1,6 @@
 import torch
-import numpy as np
 from torch import nn
-from torch.nn import functional as F
 from torch.nn.utils.rnn import pack_padded_sequence,pad_packed_sequence
-from allennlp.modules.elmo import Elmo
 
 class lseq_encode(nn.Module):
 

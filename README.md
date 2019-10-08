@@ -1,6 +1,7 @@
 # Text Generation from Knowledge Graphs with Graph Transformers
 
-This repository contains the source code of our paper, [Text Generation from Knowledge Graphs with Graph Transformers](https://google.com), which is accepted for publication at [NAACL 2019](http://naacl2019.org/).
+This is a Pytorch re-implementation of the paper, [Text Generation from Knowledge Graphs with Graph Transformers](https://google.com), which is accepted for publication at [NAACL 2019](http://naacl2019.org/).
+
 
 # Instructions
 

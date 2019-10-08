@@ -1,10 +1,8 @@
 import torch
-import numpy as np
 from torch import nn
 from beam import Beam
 import models.encoders as encoders
 from models.attn import attn
-from allennlp.modules.seq2seq_encoders.stacked_self_attention import StackedSelfAttentionEncoder
 
 class model(nn.Module):
   def __init__(self,args):

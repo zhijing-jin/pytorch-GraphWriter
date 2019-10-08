@@ -1,6 +1,4 @@
 import torch
-from collections import Counter
-import dill
 from torchtext import data
 import pargs as arg
 from copy import copy
