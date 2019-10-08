@@ -7,7 +7,8 @@ This is a Pytorch re-implementation of the paper, [Text Generation from Knowledg
 
 Training:
 ```
-python3.6 train.py -save <DIR>
+CUDA_VISIBLE_DEVICES=5 python train.py -save tmp_useless
+CUDA_VISIBLE_DEVICES=6 python train.py -title -save tmp_no_title
 ```
 Use ``--help`` for a list of all training options.
 
@@ -22,6 +23,8 @@ with the appropriate model flags used to train the model
 To evaluate, run
 ```
 python eval.py ~/proj/GraphWriter/outputs/tmp.pred ~/proj/GraphWriter/outputs/tmp.gold
+python eval/bleu.py -refs ~/proj/GraphWriter/outputs/tmp.gold -hyps ~/proj/GraphWriter/outputs/tmp.pred -verbose
+
 python3.6 eval.py <GENERATED TEXTS> <GOLD TARGETS>
 ```
 
