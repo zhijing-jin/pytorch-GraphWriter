@@ -18,7 +18,7 @@ with the appropriate model flags used to train the model
 To evaluate, run
 ```
 # get BLEU1, BLEU2, BLEU3, BLEU4
-python eval.py ~/proj/GraphWriter/outputs/tmp.pred ~/proj/GraphWriter/outputs/tmp.gold
+python eval.py outputs/tmp.pred outputs/tmp.gold
 
 # get official bleu score
 python eval/bleu.py -refs outputs/tmp.gold -hyps outputs/tmp.pred -verbose
