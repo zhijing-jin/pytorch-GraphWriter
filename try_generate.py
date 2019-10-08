@@ -52,7 +52,6 @@ def train(m, o, ds, args):
 def test(args,ds,m,epoch='cmdline'):
   args.vbsz = 1
   path, model = args.save.rsplit("/", 1)
-  import pdb;pdb.set_trace()
   m.eval()
   k = 0
   data = ds.mktestset(args)
@@ -60,9 +59,10 @@ def test(args,ds,m,epoch='cmdline'):
   pf = open(ofn,'w')
   preds = []
   golds = []
+  writeout = []
   for b in data:
     #if k == 10: break
-    print(k,len(data))
+    writeout.append('{} out of {}'.format(k,len(data)))
     b = ds.fixBatch(b)
     '''
     p,z = m(b)
@@ -74,14 +74,16 @@ def test(args,ds,m,epoch='cmdline'):
     gen = ds.reverse(gen.done[0].words,b.rawent)
     k+=1
     gold = ds.reverse(b.tgt[0][1:],b.rawent)
-    print(gold)
-    print(gen)
-    print()
+    writeout.extend([gold, gen, '\n'])
+
     preds.append(gen.lower())
     golds.append(gold.lower())
     #tf.write(ent+'\n')
     pf.write(gen.lower()+'\n')
   m.train()
+
+  import pdb;pdb.set_trace()
+  print(writeout)
   return preds,golds
 
 
@@ -129,6 +131,11 @@ def main(args):
     args.lr = float(args.ckpt.split("-")[-1])
     print('ckpt restored')
 
+    m.args = args
+    m.maxlen = args.max
+    m.starttok = ds.OUTP.vocab.stoi['<start>']
+    m.endtok = ds.OUTP.vocab.stoi['<eos>']
+    m.eostok = ds.OUTP.vocab.stoi['.']
     args.vbsz = 1
     preds, gold = test(args, ds, m)
 
