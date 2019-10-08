@@ -53,7 +53,6 @@ def train(m, o, ds, args):
 
 def test(args,ds,m,epoch='cmdline'):
   args.vbsz = 1
-  path, model = args.save.rsplit("/", 1)
   m.eval()
   k = 0
   data = ds.mktestset(args)
@@ -80,8 +79,8 @@ def test(args,ds,m,epoch='cmdline'):
     golds.append(gold.lower())
   m.train()
 
-  path_pred = os.path.join(path, "outputs/"+model+".pred")
-  path_gold = os.path.join(path, "outputs/"+model+".gold")
+  path_pred = os.path.join(args.save,"pred.txt")
+  path_gold = os.path.join(args.save,"gold.txt")
 
   fwrite('\n'.join(preds), path_pred)
   fwrite('\n'.join(golds), path_gold)
