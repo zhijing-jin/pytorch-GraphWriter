@@ -9,19 +9,6 @@ from lastDataset import dataset
 from pargs import pargs, dynArgs
 from models.newmodel import model
 
-
-def tgtreverse(tgts,entlist,order):
-  entlist = entlist[0]
-  order = [int(x) for x in order[0].split(" ")]
-  tgts = tgts.split(" ")
-  k = 0
-  for i,x in enumerate(tgts):
-    if x[0] == "<" and x[-1]=='>':
-      tgts[i] = entlist[order[k]]
-      k+=1
-  return " ".join(tgts)
-
-
 def train(m, o, ds, args):
     print("Training", end="\t")
     loss = 0
@@ -64,12 +51,12 @@ def train(m, o, ds, args):
 
 def test(args,ds,m,epoch='cmdline'):
   args.vbsz = 1
-  model = args.save.split("/")[-1]
-  ofn = "../outputs/"+model+".beam_predictions"
+  path, model = args.save.rsplit("/", 1)
+  import pdb;pdb.set_trace()
   m.eval()
   k = 0
   data = ds.mktestset(args)
-  ofn = "../outputs/"+model+".inputs.beam_predictions."+epoch
+  ofn = os.path.join(path, "outputs/"+model+".inputs.beam_predictions."+epoch)
   pf = open(ofn,'w')
   preds = []
   golds = []
@@ -142,6 +129,9 @@ def main(args):
     args.lr = float(args.ckpt.split("-")[-1])
     print('ckpt restored')
 
+    args.vbsz = 1
+    preds, gold = test(args, ds, m)
+
     o = torch.optim.SGD(m.parameters(), lr=args.lr, momentum=0.9)
 
     # early stopping based on Val Loss
@@ -150,10 +140,8 @@ def main(args):
     for e in range(starte, starte + 1):
         print("epoch ", e, "lr", o.param_groups[0]['lr'])
         vloss = evaluate(m, ds, args)
-        print('vloss:{:.2f}'.format(vloss))
 
-    args.vbsz = 1
-    preds, gold = test(args, ds, m)
+
 
 if __name__ == "__main__":
     args = pargs()
