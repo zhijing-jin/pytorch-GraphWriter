@@ -11,7 +11,7 @@ python train.py -save tmp
 ```
 To generate, use 
 ```
-python try_generate.py -ckpt <PATH_TO_MODEL> -save tmp
+python try_generate.py -ckpt <PATH_TO_MODEL> -save ./tmp
 ``` 
 with the appropriate model flags used to train the model
 
