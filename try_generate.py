@@ -58,10 +58,8 @@ def test(args,ds,m,epoch='cmdline'):
   data = ds.mktestset(args)
   preds = []
   golds = []
-  writeout = []
   for b in tqdm(data):
     #if k == 10: break
-    writeout.append('{} out of {}'.format(k,len(data)))
     b = ds.fixBatch(b)
     '''
     p,z = m(b)
@@ -73,7 +71,6 @@ def test(args,ds,m,epoch='cmdline'):
     gen = ds.reverse(gen.done[0].words,b.rawent)
     k+=1
     gold = ds.reverse(b.tgt[0][1:],b.rawent)
-    writeout.extend([gold, gen, '\n'])
 
     preds.append(gen.lower())
     golds.append(gold.lower())
@@ -85,9 +82,7 @@ def test(args,ds,m,epoch='cmdline'):
   fwrite('\n'.join(preds), path_pred)
   fwrite('\n'.join(golds), path_gold)
 
-  import pdb;pdb.set_trace()
 
-  print(writeout)
   return preds,golds
 
 
@@ -142,6 +137,7 @@ def main(args):
     m.eostok = ds.OUTP.vocab.stoi['.']
     args.vbsz = 1
     preds, gold = test(args, ds, m)
+    sys.exit()
 
     o = torch.optim.SGD(m.parameters(), lr=args.lr, momentum=0.9)
 
