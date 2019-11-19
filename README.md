@@ -4,10 +4,14 @@ This is a Pytorch re-implementation of the paper, [Text Generation from Knowledg
 
 
 # Instructions
+First, download data by
 
+```
+bash download_data.sh
+```
 To train, run
 ```
-python train.py -save tmp
+python train.py -save tmp -title
 ```
 To generate, use 
 ```
